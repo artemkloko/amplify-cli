@@ -37,10 +37,10 @@ export function generate(
 
   const fileExtension = FILE_EXTENSION_MAP[language];
   if (options.separateFiles) {
-    ['queries', 'mutations', 'subscriptions'].forEach(op => {
+    (['queries', 'mutations', 'subscriptions'] as const).forEach(op => {
       const ops = gqlOperations[op];
-      if (ops.length) {
-        const gql = render({ operations: gqlOperations[op], fragments: [] }, language);
+      if (ops.operations.length) {
+        const gql = render({ operations: ops.operations, fragments: [], refFragments: ops.refFragments }, language);
         fs.writeFileSync(path.resolve(path.join(outputPath, `${op}.${fileExtension}`)), gql);
       }
     });
@@ -50,7 +50,7 @@ export function generate(
       fs.writeFileSync(path.resolve(path.join(outputPath, `fragments.${fileExtension}`)), gql);
     }
   } else {
-    const ops = [...gqlOperations.queries, ...gqlOperations.mutations, ...gqlOperations.subscriptions];
+    const ops = [...gqlOperations.queries.operations, ...gqlOperations.mutations.operations, ...gqlOperations.subscriptions.operations];
     if (ops.length) {
       const gql = render({ operations: ops, fragments: gqlOperations.fragments }, language);
       fs.writeFileSync(path.resolve(outputPath), gql);
@@ -58,7 +58,10 @@ export function generate(
   }
 }
 
-function render(doc: { operations: Array<GQLTemplateOp>; fragments?: GQLTemplateFragment[] }, language: string = 'graphql') {
+function render(
+  doc: { operations: Array<GQLTemplateOp>; fragments?: GQLTemplateFragment[]; refFragments?: GQLTemplateFragment[] },
+  language: string = 'graphql',
+) {
   const templateFiles = {
     javascript: 'javascript.hbs',
     graphql: 'graphql.hbs',

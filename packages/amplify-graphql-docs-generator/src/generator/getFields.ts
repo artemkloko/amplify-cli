@@ -21,15 +21,17 @@ export default function getFields(
   field: GraphQLField<any, any>,
   schema: GraphQLSchema,
   depth: number = 2,
-  options: GQLDocsGenOptions
+  options: GQLDocsGenOptions,
 ): GQLTemplateField {
   const fieldType: GQLConcreteType = getType(field.type);
+  const isFragment = !!fieldType.astNode?.directives.find(directive => directive.name.value === 'fragment');
   const renderS3FieldFragment = options.useExternalFragmentForS3Object && isS3Object(fieldType);
-  const subFields = !renderS3FieldFragment && (isObjectType(fieldType) || isInterfaceType(fieldType)) ? fieldType.getFields() : [];
+  const subFields =
+    !isFragment && !renderS3FieldFragment && (isObjectType(fieldType) || isInterfaceType(fieldType)) ? fieldType.getFields() : [];
 
   const subFragments: any = isInterfaceType(fieldType) || isUnionType(fieldType) ? schema.getPossibleTypes(fieldType) : {};
 
-  if (depth < 1 && !(isScalarType(fieldType) || isEnumType(fieldType))) {
+  if (depth < 1 && !(isFragment || isScalarType(fieldType) || isEnumType(fieldType))) {
     return;
   }
 
@@ -47,6 +49,12 @@ export default function getFields(
   // Swift SDK needs S3 Object to have fragment
   if (renderS3FieldFragment) {
     fragments.push(getFragment(fieldType as GraphQLObjectType, schema, depth, [], 'S3Object', true, options));
+  }
+
+  if (isFragment) {
+    const fragment = getFragment(fieldType as GraphQLObjectType, schema, depth, [], fieldType.name + 'Model', true, options);
+    // fragment might be `undefined` because of maxDepth
+    fragment && fragments.push(fragment);
   }
 
   // if the current field is an object and none of the subfields are included, don't include the field itself

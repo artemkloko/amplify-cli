@@ -20,6 +20,7 @@ export type GQLTemplateFragment = {
   fields: Array<GQLTemplateField>;
   external: boolean;
   name: string;
+  refFragments: Array<GQLTemplateFragment>;
 };
 
 export enum GQLOperationTypeEnum {
@@ -56,6 +57,7 @@ export type GQLTemplateOpBody = GQLTemplateField & {
 export type GQLTemplateGenericOp = {
   args: Array<GQLTemplateArgDeclaration>;
   body: GQLTemplateOpBody;
+  refFragments: Array<GQLTemplateFragment>;
 };
 
 export type GQLTemplateOp = GQLTemplateGenericOp & {
@@ -64,12 +66,22 @@ export type GQLTemplateOp = GQLTemplateGenericOp & {
 };
 
 export type GQLAllOperations = {
-  queries: Array<GQLTemplateOp>;
-  mutations: Array<GQLTemplateOp>;
-  subscriptions: Array<GQLTemplateOp>;
+  queries: GQLTypeOperations;
+  mutations: GQLTypeOperations;
+  subscriptions: GQLTypeOperations;
   fragments: Array<GQLTemplateFragment>;
 };
 
 export type GQLDocsGenOptions = {
   useExternalFragmentForS3Object: boolean;
+};
+
+export type GQLTypeOperations = {
+  operations: Array<GQLTemplateOp>;
+  refFragments: Array<GQLTemplateFragment>;
+};
+
+export type GQLOrderedFragments = {
+  order: string[];
+  entries: Record<string, GQLTemplateFragment>;
 };
