@@ -1,0 +1,17 @@
+{
+  "name": "graphql-fragment-transformer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "clean": "rimraf ./lib"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "graphql-transformer-core": "6.21.8"
+  }
+}
