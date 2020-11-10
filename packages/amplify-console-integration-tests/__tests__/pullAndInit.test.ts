@@ -41,7 +41,7 @@ describe('amplify console build', () => {
 
   afterEach(async () => {});
 
-  it('connects to team project', async () => {
+  it.skip('connects to team project', async () => {
     const amplifyClient = getConfiguredAmplifyClient();
     const projectName = 'cliintegrationteam';
 
