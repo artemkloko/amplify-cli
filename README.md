@@ -19,7 +19,7 @@ This implementation supports **only TypeScript**.
 ## Setup
 
 ```bash
-git clone https://github.com/artemkloko/@aws-amplify/cli
+git clone https://github.com/artemkloko/amplify-cli.git
 cd amplify-cli
 yarn setup-dev
 ```
