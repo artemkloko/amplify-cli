@@ -1,6 +1,12 @@
-# aws amplify fragments
+<a href="https://aws-amplify.github.io/" target="_blank">
+    <img src="https://s3.amazonaws.com/aws-mobile-hub-images/aws-amplify-logo.png" alt="AWS Amplify" width="550" >
+</a>
 
-`@fragment` directive to used in user-editable-schema for `@aws-amplify/cli` TypeScript docs/types generators.
+---
+
+# AWS Amplify `@fragment`
+
+This repo contains a fork of `@aws-amplify/cli` with a hacky implementation of `@fragment` directive. This directive can be used in a `schema.graphql` of an amplify backend api in order to generate GraphQL fragments.
 
 Based on `@aws-amplify/cli@4.32.1`
 
@@ -8,18 +14,19 @@ This implementation supports **only TypeScript**.
 
 **Not recommened at all for production**, although I personally use it in production.
 
+---
+
 ## Setup
 
-```
+```bash
 git clone https://github.com/artemkloko/@aws-amplify/cli
 cd amplify-cli
 yarn setup-dev
-yarn global add graphql-fragment-transformer@link:${PWD}/packages/graphql-fragment-transformer
 ```
 
 Add the following to `__YOUR_AMPLIFY_PROJECT_ROOT_DIR__/amplify/backend/api/__API_NAME__/transform.conf.json`
 
-```
+```json
 {
     ...
     "transformers": [
@@ -28,11 +35,13 @@ Add the following to `__YOUR_AMPLIFY_PROJECT_ROOT_DIR__/amplify/backend/api/__AP
 }
 ```
 
+---
+
 ## Usage
 
 In the user-editable-schema of an amplify project add `@fragment` directive to any Object that you want to have as a fragment in the generated operations/types.
 
-```
+```graphql
 type User @model @fragment {
   id: ID!
   name: String!
@@ -53,17 +62,19 @@ type Location @fragment {
 
 On the command line use `amplify-dev` istread of `amplify`.
 
-```
+```bash
 amplify-dev push api
 amplify-dev codegen
 ```
 
 If while running `amplify-dev`, it complains that `graphql-fragment-transformer` can not be found, do the following:
 
-```
+```bash
 cd amplify-cli
 yarn global add graphql-fragment-transformer@link:${PWD}/packages/graphql-fragment-transformer
 ```
+
+---
 
 ## About this strategy
 
@@ -120,6 +131,8 @@ If this stategy will be considered a viable solution the following items should 
 - [ ] Implement tests
 - [ ] Make `amplify-graphql-types-generator` use fragments' types instread of spreading fields
 - [ ] Support languages other than TypeScript
+
+---
 
 ## Other strategies
 
