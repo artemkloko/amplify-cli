@@ -84,7 +84,7 @@ yarn global add graphql-fragment-transformer@link:${PWD}/packages/graphql-fragme
 
 A transformer package that does absolutely nothing apart from making the `@fragment` directive accepable by `@aws-amplify/cli` packages that do not have a hardcoded set of acceptable directives.
 
-https://github.com/aws-amplify/amplify-cli/blob/62a05827e165fec28740565bba342e46a853e492/packages/graphql-fragment-transformer/src/index.ts#L35
+- [packages/graphql-fragment-transformer/src/index.ts](https://github.com/artemkloko/amplify-cli/blob/4ddd5c86daf25145f39e72cf4947947aa79ec47a/packages/graphql-fragment-transformer/src/index.ts#L14)
 
 ### Modified packages
 
@@ -92,33 +92,35 @@ https://github.com/aws-amplify/amplify-cli/blob/62a05827e165fec28740565bba342e46
 
 `@fragment` directive has been added to "acceptable directives". `graphql-transformer-core` has a hardcoded set of directives that are not stripped down when the user-editable-schema is transformed to final-build-schema. This modification allows the `@fragment` directive to not be stripped down and remain in the final-build-schema.
 
-https://github.com/aws-amplify/amplify-cli/blob/6a4a540f2104261af08811fe4a6206547e5d72d8/packages/graphql-transformer-core/src/TransformFormatter.ts#L99
+- [packages/graphql-transformer-core/src/TransformFormatter.ts](https://github.com/artemkloko/amplify-cli/blob/35689b2b629c506f203ec105de03fe0e82bb459a/packages/graphql-transformer-core/src/TransformFormatter.ts#L99)
 
 #### `amplify-graphql-types-generator`
 
 `@fragment` directive has been added to "acceptable directives". `amplify-graphql-types-generator` has a hardcoded set of directives that are acceptable to be found in the final-build-schema when generating the types.
 
-https://github.com/aws-amplify/amplify-cli/blob/d9d6b48435dac77564050c088f509e36c9d51496/packages/amplify-graphql-types-generator/awsAppSyncDirectives.graphql#L24
+- [packages/amplify-graphql-types-generator/awsAppSyncDirectives.graphql](https://github.com/artemkloko/amplify-cli/blob/6cf4fbed90cb5204bf599b721bac555945a63846/packages/amplify-graphql-types-generator/awsAppSyncDirectives.graphql#L24)
 
 #### `amplify-graphql-docs-generator`
 
 `@fragment` directive has been added to "acceptable directives". `amplify-graphql-docs-generator` has a hardcoded set of directives that are acceptable to be found in the final-build-schema when generating the types.
 
-https://github.com/aws-amplify/amplify-cli/blob/ad04faff186e3d853cdb5423144635db73032a07/packages/amplify-graphql-docs-generator/awsAppSyncDirectives.graphql#L24
+- [packages/amplify-graphql-docs-generator/awsAppSyncDirectives.graphql](https://github.com/artemkloko/amplify-cli/blob/00984647f67e1ef25779b07353949eee8fc80c22/packages/amplify-graphql-docs-generator/awsAppSyncDirectives.graphql#L24)
 
 The code has been modified to check for `@fragment` directive and render a field as external fragment in such cases.
 
-https://github.com/aws-amplify/amplify-cli/blob/8483aae952f4bfde29c5217fcbf54c018f5e918e/packages/amplify-graphql-docs-generator/src/generator/getFields.ts#L27
-
-https://github.com/aws-amplify/amplify-cli/blob/8483aae952f4bfde29c5217fcbf54c018f5e918e/packages/amplify-graphql-docs-generator/src/generator/getFields.ts#L55
+- [packages/amplify-graphql-docs-generator/src/generator/getFields.ts](https://github.com/artemkloko/amplify-cli/blob/f60277a7bbffca6d4ee079fc9d7541666747e5f2/packages/amplify-graphql-docs-generator/src/generator/getFields.ts#L27)
+- [packages/amplify-graphql-docs-generator/src/generator/getFields.ts](https://github.com/artemkloko/amplify-cli/blob/f60277a7bbffca6d4ee079fc9d7541666747e5f2/packages/amplify-graphql-docs-generator/src/generator/getFields.ts#L57)
 
 The code and internal types have been modified to generate `refFragments` which allows us to specify fragments by inclusion of a variable that contains the fragment definition.
 
-https://github.com/aws-amplify/amplify-cli/blob/8483aae952f4bfde29c5217fcbf54c018f5e918e/packages/amplify-graphql-docs-generator/src/generator/generateOperation.ts#L18
+- [packages/amplify-graphql-docs-generator/src/generator/getFragment.ts](https://github.com/artemkloko/amplify-cli/blob/f60277a7bbffca6d4ee079fc9d7541666747e5f2/packages/amplify-graphql-docs-generator/src/generator/getFragment.ts#L22)
+- [packages/amplify-graphql-docs-generator/src/generator/generateOperation.ts](https://github.com/artemkloko/amplify-cli/blob/f60277a7bbffca6d4ee079fc9d7541666747e5f2/packages/amplify-graphql-docs-generator/src/generator/generateOperation.ts#L17)
+- [packages/amplify-graphql-docs-generator/src/generator/generateAllOperations.ts](https://github.com/artemkloko/amplify-cli/blob/f60277a7bbffca6d4ee079fc9d7541666747e5f2/packages/amplify-graphql-docs-generator/src/generator/generateAllOperations.ts#L83)
 
 Also the rendering templates have been modified to accompany the previously mentioned changes.
 
-https://github.com/aws-amplify/amplify-cli/blob/8483aae952f4bfde29c5217fcbf54c018f5e918e/packages/amplify-graphql-docs-generator/templates/_renderToVariable.hbs#L1
+- [packages/amplify-graphql-docs-generator/templates/\_renderToVariable.hbs](https://github.com/artemkloko/amplify-cli/blob/f60277a7bbffca6d4ee079fc9d7541666747e5f2/packages/amplify-graphql-docs-generator/templates/_renderToVariable.hbs#L1)
+- [packages/amplify-graphql-docs-generator/templates/\_renderRefFragments.hbs](https://github.com/artemkloko/amplify-cli/blob/f60277a7bbffca6d4ee079fc9d7541666747e5f2/packages/amplify-graphql-docs-generator/templates/_renderRefFragments.hbs#L1)
 
 ### Tests
 
