@@ -67,13 +67,6 @@ amplify-dev push api
 amplify-dev codegen
 ```
 
-If while running `amplify-dev`, it complains that `graphql-fragment-transformer` can not be found, do the following:
-
-```bash
-cd amplify-cli
-yarn global add graphql-fragment-transformer@link:${PWD}/packages/graphql-fragment-transformer
-```
-
 ---
 
 ## About this strategy
@@ -156,11 +149,11 @@ Cons:
 Why not:
 
 - graphql-auth-transformer tries to protect auto-generated operations
-  - https://github.com/aws-amplify/amplify-cli/blob/b85a88221e300ed79ce613fa1e9735ea416db6af/packages/graphql-auth-transformer/src/ModelAuthTransformer.ts#L380
+  - [packages/graphql-auth-transformer/src/ModelAuthTransformer.ts](https://github.com/aws-amplify/amplify-cli/blob/b85a88221e300ed79ce613fa1e9735ea416db6af/packages/graphql-auth-transformer/src/ModelAuthTransformer.ts#L380)
 - while doing so it grabs the return value of an auto-generated operation by using addObjectExtension
-  - https://github.com/aws-amplify/amplify-cli/blob/b85a88221e300ed79ce613fa1e9735ea416db6af/packages/graphql-auth-transformer/src/ModelAuthTransformer.ts#L1989
+  - [packages/graphql-auth-transformer/src/ModelAuthTransformer.ts](https://github.com/aws-amplify/amplify-cli/blob/b85a88221e300ed79ce613fa1e9735ea416db6af/packages/graphql-auth-transformer/src/ModelAuthTransformer.ts#L1989)
 - which can only grab objectType from root and not union/interface
-  - https://github.com/aws-amplify/amplify-cli/blob/b85a88221e300ed79ce613fa1e9735ea416db6af/packages/graphql-transformer-core/src/TransformerContext.ts#L485
+  - [packages/graphql-transformer-core/src/TransformerContext.ts](https://github.com/aws-amplify/amplify-cli/blob/b85a88221e300ed79ce613fa1e9735ea416db6af/packages/graphql-transformer-core/src/TransformerContext.ts#L485)
 
 #### Fragments for all
 
